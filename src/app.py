@@ -3,8 +3,8 @@ import logging
 from json import load
 
 from http_client.http_client import send_json
-from schema_adapter.openapi import fetch_openapi, find_request_schema
-from schema_adapter.utils import build_minimal_payload, minimal_validate
+#from schema_adapter.openapi import fetch_openapi, find_request_schema
+#from schema_adapter.utils import build_minimal_payload, minimal_validate
 
 
 def load_default_schema():
@@ -33,15 +33,15 @@ def test(
     schema = None
     swagger_url = api_swagger_url
 
-    if swagger_url:
-        try:
-            openapi = fetch_openapi(swagger_url, timeout=timeout)
-            schema = find_request_schema(openapi, url, method)
-        except Exception:
-            logging.exception("Échec de la récupération/lecture du Swagger. Utilisation du schéma par défaut.")
-    if not schema:
-        schema = load_default_schema()
-        logging.info('Schéma par défaut chargé (schemas/default_feedback_schema.json)')
+#    if swagger_url:
+#        try:
+#            openapi = fetch_openapi(swagger_url, timeout=timeout)
+#            schema = find_request_schema(openapi, url, method)
+#        except Exception:
+#            logging.exception("Échec de la récupération/lecture du Swagger. Utilisation du schéma par défaut.")
+#    if not schema:
+#        schema = load_default_schema()
+#        logging.info('Schéma par défaut chargé (schemas/default_feedback_schema.json)')
 
 #    # Payload
 #    payload = None
@@ -60,19 +60,19 @@ def test(
         "comment": "demo"
     }
 
-    # Validation minimale et auto-fill
-    if auto_fill:
-        missing_payload = build_minimal_payload(schema)
-        for k, v in missing_payload.items():
-            if k not in payload:
-                payload[k] = v
-        logging.info('Auto-remplissage appliqué sur le payload de sortie')
+#    # Validation minimale et auto-fill
+#    if auto_fill:
+#        missing_payload = build_minimal_payload(schema)
+#        for k, v in missing_payload.items():
+#            if k not in payload:
+#                payload[k] = v
+#        logging.info('Auto-remplissage appliqué sur le payload de sortie')
 
-    valid = minimal_validate(schema, payload)
-    if not valid:
-        logging.error('Payload invalide au regard du schéma. Corrigez ou utilisez --auto-fill si possible.')
-        if not dry_run:
-            return 2
+#    valid = minimal_validate(schema, payload)
+#    if not valid:
+#        logging.error('Payload invalide au regard du schéma. Corrigez ou utilisez --auto-fill si possible.')
+#        if not dry_run:
+#            return 2
 
     logging.info(f"Préparation de l'envoi vers {url} avec méthode {method}")
     if dry_run:
