@@ -42,7 +42,7 @@ def main(arguments):
             log_file,
             log_level,
             log_format
-        )=load_config(config_file=config_file)
+        ) = load_config(config_file=config_file)
 
         # Init Logging
         numeric_level = compute_log_level(log_level)
