@@ -1,5 +1,5 @@
 """
-Functions to manage logs
+Log file management
 """
 
 import logging

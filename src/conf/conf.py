@@ -1,3 +1,7 @@
+"""
+Config file management
+"""
+
 import sys
 import configparser
 import logging
@@ -13,6 +17,7 @@ def load_config(config_file):
             api_endpoint_url,
             api_rest_method,
             api_timeout_seconds,
+            api_auth_active,
             api_username,
             api_password,
             ollama_url,
@@ -20,6 +25,7 @@ def load_config(config_file):
             log_file,
             log_level,
             log_format,
+            generation_mode,
     """
     config = configparser.ConfigParser()
     try:
@@ -31,6 +37,7 @@ def load_config(config_file):
         api_rest_method = config["API"]["method"]
         api_timeout_seconds = int(config["API"]["timeout_seconds"])
 
+        api_auth_active = config["API_AUTH"]["active"]
         api_username = config["API_AUTH"]["username"]
         api_password = config["API_AUTH"]["password"]
 
@@ -41,6 +48,8 @@ def load_config(config_file):
         log_level = config["LOG"]["log_level"]
         log_format = config["LOG"]["log_format"]
 
+        generation_mode = config["GENERATION"]["mode"]
+
         # For multivalued, use split
         # mv_list = config["XYZ"]["list"].split(",")
 
@@ -48,6 +57,7 @@ def load_config(config_file):
             api_endpoint_url,
             api_rest_method,
             api_timeout_seconds,
+            api_auth_active,
             api_username,
             api_password,
             ollama_url,
@@ -55,6 +65,7 @@ def load_config(config_file):
             log_file,
             log_level,
             log_format,
+            generation_mode,
         )
     except FileNotFoundError:
         logging.error(f"Config file not found: {config_file}")

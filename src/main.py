@@ -9,7 +9,7 @@ import sys
 
 from conf.conf import load_config
 from logs.logs import compute_log_level
-from app import test
+from app import push_campaign_feedbacks_to_api
 
 
 def usage():
@@ -26,16 +26,18 @@ def usage():
 
 
 def main(arguments):
-    if len(arguments) != 2:
+    if len(arguments) > 3:
         usage()
         exit(1)
     else:
         config_file = "src/config.ini"
 
+        # Load config file
         (
             api_endpoint_url,
             api_rest_method,
             api_timeout_seconds,
+            api_auth_active,
             api_username,
             api_password,
             ollama_url,
@@ -43,6 +45,7 @@ def main(arguments):
             log_file,
             log_level,
             log_format,
+            generation_mode,
         ) = load_config(config_file=config_file)
 
         # Init Logging
@@ -64,14 +67,18 @@ def main(arguments):
             case "HELP":
                 usage()
             case "PUSH":
-                test(
-                    api_endpoint_url,
-                    api_rest_method,
-                    api_timeout_seconds,
-                    ollama_url,
-                    ollama_model,
-                    api_username,
-                    api_password,
+                feedbacks_to_push = int(arguments[2])
+                push_campaign_feedbacks_to_api(
+                    api_endpoint_url=api_endpoint_url,
+                    api_rest_method=api_rest_method,
+                    api_timeout_seconds=api_timeout_seconds,
+                    api_auth_active=api_auth_active,
+                    api_username=api_username,
+                    api_password=api_password,
+                    generation_mode=generation_mode,
+                    ollama_url=ollama_url,
+                    ollama_model=ollama_model,
+                    feedbacks_to_push=feedbacks_to_push
                 )
 
 
