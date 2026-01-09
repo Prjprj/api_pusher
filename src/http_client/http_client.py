@@ -1,16 +1,14 @@
 import json
-import time
 import logging
-from typing import Dict, Optional
 from urllib import request, error
 
 
-def _build_request(url: str, method: str, headers: Dict[str, str], body: Optional[bytes]):
+def _build_request(url, method, headers, body):
     req = request.Request(url=url, data=body, headers=headers or {}, method=method)
     return req
 
 
-def send_json(url: str, payload: Dict, headers: Dict[str, str], timeout: int, method: str = 'POST') -> Dict:
+def send_json(url, payload, headers, timeout, method = 'POST'):
     data_bytes = json.dumps(payload).encode('utf-8')
     hdrs = headers
     hdrs.setdefault('Content-Type', 'application/json')

@@ -34,14 +34,15 @@ def main(arguments):
 
         (
             api_endpoint_url,
-            api_swagger_url,
             api_rest_method,
             api_timeout_seconds,
             api_username,
             api_password,
+            ollama_url,
+            ollama_model,
             log_file,
             log_level,
-            log_format
+            log_format,
         ) = load_config(config_file=config_file)
 
         # Init Logging
@@ -65,9 +66,10 @@ def main(arguments):
             case "PUSH":
                 test(
                     api_endpoint_url,
-                    api_swagger_url,
                     api_rest_method,
                     api_timeout_seconds,
+                    ollama_url,
+                    ollama_model,
                     api_username,
                     api_password,
                 )
