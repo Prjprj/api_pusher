@@ -91,4 +91,4 @@ Generation mode can be **ollama** or **manual**
 ## Dependencies
 No Python dependency
 
-For Ollama generation, an access to a Ollama server with models pulled
+For Ollama generation, access to an Ollama server with models pulled

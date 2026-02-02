@@ -116,13 +116,13 @@ def generate_feedback_via_ollama(
                 },
                 "feedback_date": {
                     "type": "string",
-                    "pattern": r"^\d{4}-\d{2}-\d{2}$"
+                    "pattern": r"^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
                 },
                 "campaign_id": {
                     "type": "string"
                 },
                 "comment": {
-                    "type": "string"
+                    "type": "integer"
                 }
             },
             "required": ["username", "feedback_date", "campaign_id", "comment"],
