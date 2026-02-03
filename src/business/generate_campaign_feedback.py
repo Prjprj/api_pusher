@@ -5,42 +5,11 @@ Data Generation management
 import json
 import logging
 import random
-import time
 
 import urllib.request
 import urllib.error
 
-from business import allowed_comments
-
-
-def str_time_prop(start, end, time_format, prop):
-    """
-    Get a time at a proportion of a range of two formatted times.
-
-    :param start: start of the interval
-    :param end: end of the interval
-    :param time_format: format of date
-    :param prop: proportion of time between end and start
-    :return: return a random date between start and end, the returned time will be in the specified format
-    """
-    stime = time.mktime(time.strptime(start, time_format))
-    etime = time.mktime(time.strptime(end, time_format))
-
-    ptime = stime + prop * (etime - stime)
-
-    return time.strftime(time_format, time.localtime(ptime))
-
-
-def random_date(start, end, prop):
-    """
-    Get a time at a proportion of a range of two formatted times.
-
-    :param start: start of the interval
-    :param end: end of the interval
-    :param prop: proportion of time between end and start
-    :return: return a random date between start and end
-    """
-    return str_time_prop(start, end, '%Y-%m-%d', prop)
+from business import allowed_comments, random_date
 
 
 def generate_random_feedback(
@@ -63,7 +32,7 @@ def generate_random_feedback(
 
         # Determine random comment
         comment_number = random.randint(1, len(allowed_comments))
-        comment = allowed_comments[comment_number]
+        comment = allowed_comments[comment_number-1]
         logging.debug(f"Random comment number: {comment_number}, comment: {comment}")
 
         # Build JSON to add to payload
@@ -144,7 +113,7 @@ Rules:
 - "username": random usernames like in social network, no obsene name.
 - "feedback_date": valid date "YYYY-MM-DD" in the year 2024, 2025 and 2026.
 - "campaign_id": "CAMP" followed by three digits (e.g. CAMP147).
-- "comment": choose a random number between 1 and 40
+- "comment": choose a random number between 1 and {len(allowed_comments)}
 Ensure all items are valid and diverse. Return only JSON.
 """
 
@@ -209,7 +178,7 @@ Ensure all items are valid and diverse. Return only JSON.
             "username": f"{item['username']}",
             "feedback_date": f"{item['feedback_date']}",
             "campaign_id": f"{item['campaign_id']}",
-            "comment": f"{allowed_comments[int(item['comment'])]}"
+            "comment": f"{allowed_comments[int(item['comment']) % len(allowed_comments)]}"
         }
         logging.debug(f"Ollama response item: {result_to_add}")
         result.append(result_to_add)

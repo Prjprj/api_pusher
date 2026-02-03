@@ -1,4 +1,6 @@
 # Global value: Allowed Comments
+import time
+
 allowed_comments = [
     "Great campaign!",
     "Not very engaging.",
@@ -41,3 +43,55 @@ allowed_comments = [
     "優れたマーケティング戦略です。",
     "もっと整理できると思います。"
 ]
+
+allowed_countries = [
+    "France",
+    "Germany",
+    "Brazil",
+    "UK",
+    "Japan",
+    "China",
+    "India",
+    "USA",
+    "Canada"
+]
+
+allowed_products = [
+    "Fried Wings",
+    "Chicken Nuggets",
+    "Grilled Tenders",
+    "Spicy Strips",
+    "Hardcore Spicy Tenders",
+    "Soft Chicken Nuggets",
+    "Too Much Grilled Tenders"
+]
+
+
+def str_time_prop(start, end, time_format, prop):
+    """
+    Get a time at a proportion of a range of two formatted times.
+
+    :param start: start of the interval
+    :param end: end of the interval
+    :param time_format: format of date
+    :param prop: proportion of time between end and start
+    :return: return a random date between start and end, the returned time will be in the specified format
+    """
+    stime = time.mktime(time.strptime(start, time_format))
+    etime = time.mktime(time.strptime(end, time_format))
+
+    ptime = stime + prop * (etime - stime)
+
+    return time.strftime(time_format, time.localtime(ptime))
+
+
+def random_date(start, end, prop):
+    """
+    Get a time at a proportion of a range of two formatted times.
+
+    :param start: start of the interval
+    :param end: end of the interval
+    :param prop: proportion of time between end and start
+    :return: return a random date between start and end
+    """
+    return str_time_prop(start, end, '%Y-%m-%d', prop)
