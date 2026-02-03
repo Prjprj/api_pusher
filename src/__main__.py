@@ -9,7 +9,7 @@ import sys
 
 from conf.conf import load_config
 from logs.logs import compute_log_level
-from app import push_campaign_feedbacks_to_api
+from app import push_campaign_feedbacks_to_api, create_sales_csv_file
 
 
 def usage():
@@ -40,6 +40,8 @@ def main(arguments):
             api_auth_active,
             api_username,
             api_password,
+            sales_csv_file,
+            campaign_product_csv_file,
             ollama_url,
             ollama_model,
             log_file,
@@ -79,6 +81,16 @@ def main(arguments):
                     ollama_url=ollama_url,
                     ollama_model=ollama_model,
                     feedbacks_to_push=feedbacks_to_push
+                )
+            case "CSV":
+                lines_to_create = int(arguments[2])
+                create_sales_csv_file(
+                    sales_csv_file=sales_csv_file,
+                    campaign_product_csv_file=campaign_product_csv_file,
+                    generation_mode=generation_mode,
+                    ollama_url=ollama_url,
+                    ollama_model=ollama_model,
+                    lines_to_create=lines_to_create
                 )
 
 

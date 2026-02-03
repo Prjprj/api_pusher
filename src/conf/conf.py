@@ -20,6 +20,8 @@ def load_config(config_file):
             api_auth_active,
             api_username,
             api_password,
+            sales_csv_file,
+            campaign_product_csv_file,
             ollama_url,
             ollama_model,
             log_file,
@@ -41,6 +43,14 @@ def load_config(config_file):
         api_username = config["API_AUTH"]["username"]
         api_password = config["API_AUTH"]["password"]
 
+        sales_csv_file_name = config["CSV"]["sales_file_name"]
+        sales_csv_file_path = config["CSV"]["sales_file_path"]
+        sales_csv_file = sales_csv_file_path + sales_csv_file_name
+
+        campaign_product_csv_file_name = config["CSV"]["campaign_product_file_name"]
+        campaign_product_csv_file_path = config["CSV"]["campaign_product_file_path"]
+        campaign_product_csv_file = campaign_product_csv_file_path + campaign_product_csv_file_name
+
         ollama_url = config["OLLAMA"]["ollama_url"]
         ollama_model = config["OLLAMA"]["ollama_model"]
 
@@ -60,6 +70,8 @@ def load_config(config_file):
             api_auth_active,
             api_username,
             api_password,
+            sales_csv_file,
+            campaign_product_csv_file,
             ollama_url,
             ollama_model,
             log_file,
