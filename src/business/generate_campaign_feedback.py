@@ -40,7 +40,7 @@ def random_date(start, end, prop):
     :param prop: proportion of time between end and start
     :return: return a random date between start and end
     """
-    return str_time_prop(start, end, '%d/%m/%Y', prop)
+    return str_time_prop(start, end, '%Y-%m-%d', prop)
 
 
 def generate_random_feedback(
@@ -58,7 +58,7 @@ def generate_random_feedback(
     while i < feedbacks_to_push:
         # Get random values to add to payload
         user_number = random.randint(1, 4999)
-        campaign_date = random_date("1/1/2024", "31/12/2026", random.random())
+        campaign_date = random_date("2024-1-1", "2026-12-31", random.random())
         campaign_number = random.randint(1, 999)
 
         # Determine random comment
