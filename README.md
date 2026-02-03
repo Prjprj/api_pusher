@@ -1,12 +1,14 @@
-# Api_pusher
+# Fake Data Generator for Data Engineering Course
 
 ## Description
-Tool to generate fake marketing campaign feedback for EFREI School **Data Engineering Applications** course
+Tool to generate fake marketing campaign feedback & sales Data for EFREI School **Data Engineering Applications** course
 
-The goal is to implement a tool to push JSON data on an API endpoint.
-Data can be generated with a local Generative AI or with simple random functions depending of the config
+The goal is to implement a tool to push JSON data on an API endpoint or to generate CSV Files for batch ingestion.
+
+Data can be generated with a local Generative AI or with simple random functions depending on the config
 
 ## Data Structure
+### JSON for Campaign feedbacks
 JSON Structure is the following:
 ```JSON
 {
@@ -47,9 +49,31 @@ Example:
 }
 ```
 
+### CSV for Sales
+```csv
+username,sale_date,country,product,quantity,unit_price,total_amount
+```
+
+Example:
+```csv
+user149,2025-05-10,India,Chicken Nuggets,5,11.14,55.7
+```
+
+### CSV for Campaign/Product Mapping
+```csv
+campaign_id,product
+```
+
+Example:
+```csv
+CAMP000,Spicy Strips
+```
+
 Queries to API will have to send a list of JSON
 
-## How to run this program
+CSV Files will be created at the path set in the config file
+
+## How to run this program to push to an API
 ```Shell
 python __main__.py PUSH <number_of_feedbacks_to_generate>
 ```
@@ -57,6 +81,17 @@ python __main__.py PUSH <number_of_feedbacks_to_generate>
 Example:
 ```Shell
 python __main__.py PUSH 10
+```
+
+## How to run this program to create a CSV file
+Sales and campaign/product mapping CSV files will always be generated at the same time to be consistent
+```Shell
+python __main__.py CSV <number_of_feedbacks_to_generate>
+```
+
+Example:
+```Shell
+python __main__.py CSV 10
 ```
 
 ## Configuration
@@ -70,6 +105,12 @@ timeout_seconds = 10
 active = False
 username = XYZ
 password = XYZ
+
+[CSV]
+sales_file_path = ./
+sales_file_name = sales.csv
+campaign_product_file_path = ./
+campaign_product_file_name = campaign_product.csv
 
 [LOG]
 log_level = DEBUG
@@ -92,3 +133,6 @@ Generation mode can be **ollama** or **manual**
 No Python dependency
 
 For Ollama generation, access to an Ollama server with models pulled
+
+## TODO
+Authentication to the destination endpoint is not implemented, will be done if needed
